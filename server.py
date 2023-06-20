@@ -7,8 +7,6 @@ def start_chat_server(session_id):
     pubsub = r.pubsub()
     pubsub.subscribe(session_id)
 
-    print(f"Chat server started for session: {session_id}")
-
     def handle_messages():
         for message in pubsub.listen():
             if message['type'] == 'message':
@@ -22,10 +20,9 @@ def start_chat_server(session_id):
     threading.Thread(target=handle_messages).start()
 
     while True:
-        message = input("Enter your message: ")
+        message = "Empty"
         r.publish(session_id, message)
 
 
 if __name__ == '__main__':
-    session_id = input("Enter session ID: ")
-    start_chat_server(session_id)
+    start_chat_server(0)
